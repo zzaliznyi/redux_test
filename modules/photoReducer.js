@@ -18,13 +18,13 @@ export default function PhotosReducer(state = initialState, action) {
             return {
                 ...state,
                 pending: false,
-                photos: [...action.payload]
+                photos: action.payload
             }
         case "GET_PHOTOS_ERROR":
             return {
                 ...state,
                 pending: false,
-                error: [...action.error]
+                error: action.error
             }
         default:
             return state;

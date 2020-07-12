@@ -1,26 +1,26 @@
-
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {Navbar} from './src/Navbar';
-import Photo from './src/Photo';
 import { Provider } from 'react-redux';
-import PhotosReducer from './modules/photoReducer';
 import { logger } from 'react-native-logs';
 import {store} from './modules/photoAction';
-import Gallery from './modules/fetchPhotos';
-
+import Container from './modules/photoAction';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import PhotoItem from './src/PhotoItem';
+const Stack = createStackNavigator();
 const log = logger.createLogger();
  
 export default function App() {
   return (
     <View style={styles.container}>
-      <Navbar/>
-      <Provider store ={store}>
-        <Photo/>
-      </Provider>
-      
+    <Provider store= {store}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Gallery">
+            <Stack.Screen name="Gallery" component={Container} />
+            <Stack.Screen name="Photo" component={PhotoItem} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        </Provider>
     </View>
   );
 }

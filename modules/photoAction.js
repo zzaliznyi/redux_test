@@ -31,33 +31,43 @@ export const getPhotos = () => {
 }
 
 const getPhotosPending = () => {
+    log.info("Pending...");
     return {
         type: GET_PHOTOS_PENDING
     }
 }
 const getPhotosSuccess = (photos) => {
+    log.info("Success");
     return {
         type: GET_PHOTOS_SUCCESS,
         payload: photos
     }
 }
 const getPhotosError = (error) => {
+    log.info("Error" + error);
     return {
         type: GET_PHOTOS_ERROR,
         payload: error
     }
 }
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
+    log.info("Dispatch");
     return {
-        photos: state.photos
+        getPhotos: () => dispatch(getPhotos()),
+        getState : () => store.getState(),
     }
 }
-const mapDispatchToProps = {
-    getPhotos,
+const mapStateToProps = (state) => {
+
+    return {
+        photos: state.photos.data
+    }
 }
 
 export const store = createStore(PhotosReducer, applyMiddleware(thunk));
-export default connect(mapStateToProps,mapDispatchToProps)(Photo);
+const Container = connect(mapStateToProps,mapDispatchToProps)(Photo);
+export default Container;
+
 
 
 
